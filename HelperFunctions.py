@@ -23,16 +23,23 @@ class line_grid:
     theta_field and l_field are equally sized 2-d arrays.
     The lines are evenly distributed across the grid automatically.
     '''
-    def __init__(self, theta_field, l_field, width, height):
+    def __init__(self, theta_field, width, height):
         self.theta_field = theta_field
-        self.l_field = l_field
         self.width = width
         self.height = height
 
         shape = theta_field.shape
-
-        x_coords = np.linspace(0, width, shape[0])
-        y_coords = np.linspace(0, height, shape[1])
         
+        l = 0.9*min([self.width, self.height])/max(shape)
 
-        line_grid = short_line(self.theta_field, self.l_field)
+        x_coords = np.linspace(0, width, len(theta_field[0]))
+        y_coords = np.linspace(0, height, len(theta_field))
+
+        self.line_grid = []
+
+        for x, theta_row in zip(x_coords, theta_field):
+            line_grid_row = []
+            for y, theta in zip(y_coords, theta_row):
+                line_grid_row.append(short_line(x, y, l, theta))
+
+            self.line_grid.append(line_grid_row)
