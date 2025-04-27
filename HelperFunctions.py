@@ -17,12 +17,22 @@ class short_line:
 
         self.xy = [(x1, y1), (x2, y2)]
 
-def line_grid(theta_field, l_field):
+class line_grid:
     '''
     Draws a grid of lines with angles and lengths corresponding to fields provided.
-    theta_field and l_field are equally sized 2-d arrays. 
+    theta_field and l_field are equally sized 2-d arrays.
+    The lines are evenly distributed across the grid automatically.
     '''
+    def __init__(self, theta_field, l_field, width, height):
+        self.theta_field = theta_field
+        self.l_field = l_field
+        self.width = width
+        self.height = height
 
-    lg = short_line(theta_field, l_field)
+        shape = theta_field.shape
 
-    return lg
+        x_coords = np.linspace(0, width, shape[0])
+        y_coords = np.linspace(0, height, shape[1])
+        
+
+        line_grid = short_line(self.theta_field, self.l_field)
